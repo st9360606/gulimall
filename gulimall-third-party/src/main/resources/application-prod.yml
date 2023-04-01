@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    alicloud:
+      access-key: LTAI5tJHsUU7ww1DkaXbAY6u
+      secret-key: 1cpQvXZ2quGqQCU0UXpHPMoz7DgaAT
+      oss:
+        endpoint: oss-cn-hongkong.aliyuncs.com
+        bucket: gulimall-kurt
+      #阿里云短信服务 (這裡是第三方範本，由於沒買服務)
+      sms:
+        host: https://smsmsgs.market.alicloudapi.com
+        path: /sms/
+        skin: 1
+        sign: 1
+        appcode: 93b7e19861a24c519a7548b17dc16d75
+
+  application:
+    name: gulimall-third-party
+
+server:
+  port: 8080

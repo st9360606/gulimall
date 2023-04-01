@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gulimall-third-party
+  namespace: gulimall
+  labels:
+    app: gulimall-third-party
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gulimall-third-party
+  template:
+    metadata:
+      labels:
+        app: gulimall-third-party
+    spec:
+      containers:
+        - name: gulimall-third-party
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+  
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gulimall-third-party
+  namespace: gulimall
+  labels:
+    app: gulimall-third-party
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 20019
+  selector:
+    app: gulimall-third-party
+  type: NodePort
+  sessionAffinity: None

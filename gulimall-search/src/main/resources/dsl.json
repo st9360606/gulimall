@@ -1,0 +1,150 @@
+//GET gulimall_product/_search
+//模糊匹配，過濾 ( 按照屬性，分類，品牌，價格區間，庫存 ) ，排序，分頁，高亮，聚合分析
+
+//如果是嵌入式的屬性，查詢，聚合，分析都應該用嵌入式的
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "skuTitle": "華為"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "catalogId": "225"
+          }
+        },
+        {
+          "term": {
+            "brandId": "9"
+          }
+        },
+        {
+          "nested": {
+            "path": "attrs",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "term": {
+                      "attrs.attrId": {
+                        "value": "9"
+                      }
+                    }
+                  },
+                  {
+                    "terms": {
+                      "attrs.attrValue": [
+                        "海思（Hisilicon）",
+                        "HUAWEI Kirin 970"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "term": {
+            "hasStock": {
+              "value": "true"
+            }
+          }
+        },
+        {
+          "range": {
+            "skuPrice": {
+              "gte": 0,
+              "lte": 6000
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "skuPrice": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 0,
+  "size": 1,
+  "highlight": {
+    "fields": {
+      "skuTitle": {}
+    },
+    "pre_tags": "<b style='color:red'>",
+    "post_tags": "</b>"
+  },
+  "aggs": {
+    "brand_agg": {
+      "terms": {
+        "field": "brandId",
+        "size": 10
+      },
+      "aggs": {
+        "brand_name_agg": {
+          "terms": {
+            "field": "brandName",
+            "size": 10
+          }
+        },
+        "brand_img_agg": {
+          "terms": {
+            "field": "brandImg",
+            "size": 10
+          }
+        }
+      }
+    },
+    "catalog_agg": {
+      "terms": {
+        "field": "catalogId",
+        "size": 10
+      },
+      "aggs": {
+        "catalog_name_agg": {
+          "terms": {
+            "field": "catalogName",
+            "size": 10
+          }
+        }
+      }
+    },
+    "attr_agg": {
+      "nested": {
+        "path": "attrs"
+      },
+      "aggs": {
+        "attr_id_agg": {
+          "terms": {
+            "field": "attrs.attrId",
+            "size": 10
+          },
+          "aggs": {
+            "attr_name_agg": {
+              "terms": {
+                "field": "attrs.attrName",
+                "size": 10
+              }
+            },
+            "attr_value_agg": {
+              "terms": {
+                "field": "attrs.attrValue",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
