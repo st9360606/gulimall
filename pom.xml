@@ -9,10 +9,10 @@
     <description>聚合服務</description>
     <packaging>pom</packaging>
 
-    <prerequisites>
+    <properties>
         <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
         <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
-    </prerequisites>
+    </properties>
 
     <modules>
         <module>gulimall-common</module>
