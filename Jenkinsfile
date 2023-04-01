@@ -20,6 +20,7 @@ pipeline {
     GITHUB_ACCOUNT = 'st9360606'
     GITEE_ACCOUNT = 'st9360606%40gmail.com'
     SONAR_CREDENTIAL_ID = 'sonar-qube'
+    BRANCH_NAME = 'master'
   }
 
   stages {
