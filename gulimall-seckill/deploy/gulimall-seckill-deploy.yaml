@@ -55,7 +55,7 @@ spec:
       protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 20017
+      nodePort: 31008
   selector:
     app: gulimall-seckill
   type: NodePort

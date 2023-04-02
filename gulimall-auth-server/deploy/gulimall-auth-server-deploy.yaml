@@ -55,7 +55,8 @@ spec:
       protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 20001
+      nodePort: 31000
+#30000-32767
   selector:
     app: gulimall-auth-server
   type: NodePort
