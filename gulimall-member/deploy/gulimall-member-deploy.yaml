@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gulimall-member
-          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:latest
           ports:
             - containerPort: 8080
               protocol: TCP
