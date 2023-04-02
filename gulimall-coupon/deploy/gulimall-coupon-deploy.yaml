@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gulimall-coupon
-          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION
           ports:
             - containerPort: 8080
               protocol: TCP
