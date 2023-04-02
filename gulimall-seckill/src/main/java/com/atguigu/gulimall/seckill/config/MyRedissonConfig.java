@@ -24,7 +24,7 @@ public class MyRedissonConfig {
      * 所有對Redisson的使用都是通過RedissonClient對象
      */
     @Bean(destroyMethod = "shutdown")
-    public RedissonClient redisson(@Value("${spring.redis.host}") String url) throws IOException {
+    public RedissonClient redisson(@Value("${spring.redis.host}") String url){
         //1 創建配置
         //Redis url should start with redis:// or rediss:// (for SSL connection)
         Config config = new Config();
