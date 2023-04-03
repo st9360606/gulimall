@@ -7,6 +7,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,10 +43,11 @@ public class GulimallElasticSearchConfig {
 
 
     @Bean
-    public RestHighLevelClient esRestClient() {
+    public RestHighLevelClient esRestClient(@Value("${spring.elasticsearch.jest.uris}") String esUrl) {
         RestClientBuilder builder = null;
         //final String hostname, final int port, final String scheme
-        builder = RestClient.builder(new HttpHost("192.168.56.10", 9200, "http"));
+//        builder = RestClient.builder(new HttpHost("192.168.56.10", 9200, "http"));
+        builder = RestClient.builder(HttpHost.create(esUrl));
         RestHighLevelClient client = new RestHighLevelClient(builder);
 //        RestHighLevelClient client = new RestHighLevelClient(
 //                RestClient.builder(
