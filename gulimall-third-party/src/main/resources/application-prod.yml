@@ -1,6 +1,8 @@
 spring:
   cloud:
     alicloud:
+      access-key: accesskey
+      secret-key: secretkey
       oss:
         endpoint: oss-cn-hongkong.aliyuncs.com
         bucket: gulimall-kurt
